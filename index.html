@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 Brindes Corporativos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #25D366;
+            --dark: #333333;
+            --text: #424242;
+            --light: #F8F9FA;
+            --white: #FFFFFF;
+            --border: #E0E0E0;
+            --error: #F44336;
+            --success: #4CAF50;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .nav {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            color: var(--dark);
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--light);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1ea855;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #25D366 0%, #1ea855 100%);
+            color: white;
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .card-body {
+            padding: 16px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+            min-height: 35px;
+        }
+
+        .card-btn {
+            width: 100%;
+            padding: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .card-btn:hover {
+            background: #1ea855;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            padding: 32px;
+            animation: slideUp 0.3s;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .modal-emoji {
+            font-size: 64px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .specs {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 13px;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-row strong {
+            color: var(--dark);
+        }
+
+        /* SIZE SELECTOR */
+        .size-group {
+            margin-bottom: 24px;
+        }
+
+        .size-label {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: block;
+            color: var(--dark);
+        }
+
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .size-btn {
+            padding: 12px 8px;
+            border: 2px solid var(--border);
+            background: var(--white);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .size-btn:hover {
+            border-color: var(--primary);
+            background: rgba(37, 211, 102, 0.05);
+        }
+
+        .size-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .qty-group {
+            margin-bottom: 24px;
+        }
+
+        .qty-label {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--border);
+            background: var(--light);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .upload-section {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .upload-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(37, 211, 102, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(37, 211, 102, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .upload-text {
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-preview {
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--white);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .file-name {
+            font-size: 12px;
+            color: var(--text);
+            margin-top: 8px;
+            word-break: break-all;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-success {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1ea855;
+        }
+
+        .btn-success:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-cancel {
+            background: var(--border);
+            color: var(--dark);
+        }
+
+        .btn-cancel:hover {
+            background: #d0d0d0;
+        }
+
+        /* CART */
+        .cart-page {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cart-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-detail {
+            font-size: 13px;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .cart-personal {
+            font-size: 12px;
+            background: var(--light);
+            padding: 6px 8px;
+            border-radius: 4px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .remove-btn {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 32px 16px;
+            color: var(--text);
+        }
+
+        .empty-cart a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* WHATSAPP MODAL */
+        .whatsapp-modal {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 700px;
+        }
+
+        .whatsapp-modal h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .preview-section {
+            margin: 24px 0;
+            padding: 24px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .instructions {
+            background: rgba(37, 211, 102, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 24px;
+            border-radius: 6px;
+            margin: 24px 0;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .instructions strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .instructions ol {
+            margin-left: 24px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #1ea855;
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+        }
+
+        .footer p {
+            margin-bottom: 8px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+            animation: slideUp 0.3s;
+            font-size: 14px;
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                padding: 24px;
+            }
+
+            .size-grid {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo" onclick="showHome()">🎁 Brindes</div>
+    <div class="nav">
+        <button class="btn" onclick="showHome()">Catálogo</button>
+        <button class="btn btn-primary" id="cartBtn" style="display:none;" onclick="showCart()">
+            🛒 Carrinho <span class="badge" id="cartCount">0</span>
+        </button>
+    </div>
+</div>
+
+<!-- HOME PAGE -->
+<div id="homePage" style="display:none;">
+    <div class="container">
+        <div class="hero">
+            <h1>🎁 Brindes Corporativos</h1>
+            <p>Escolha seu produto e personalize com sua marca</p>
+        </div>
+
+        <h2 style="font-size:24px; font-weight:700; margin-bottom:24px; color:var(--dark);">📦 Catálogo de Produtos</h2>
+
+        <div id="gridContainer" class="grid"></div>
+
+        <div class="pagination">
+            <button class="page-btn" id="prevBtn" onclick="prevPage()">←</button>
+            <div id="pageNumbers"></div>
+            <button class="page-btn" id="nextBtn" onclick="nextPage()">→</button>
+            <span class="page-info">Página <span id="currentPage">1</span> de <span id="totalPages">1</span></span>
+        </div>
+    </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-emoji" id="modalEmoji"></div>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="specs" id="modalSpecs"></div>
+
+        <!-- TAMANHO/VARIEDADE -->
+        <div id="sizeGroupContainer"></div>
+
+        <!-- QUANTIDADE -->
+        <div class="qty-group">
+            <label class="qty-label">Quantidade:</label>
+            <div class="qty-control">
+                <button class="qty-btn" onclick="decreaseQty()">−</button>
+                <input type="number" class="qty-input" id="qtyInput" value="1" min="1">
+                <button class="qty-btn" onclick="increaseQty()">+</button>
+            </div>
+        </div>
+
+        <!-- UPLOAD PERSONALIZAÇÃO -->
+        <div class="upload-section">
+            <div class="upload-title">🎨 Personalização (Opcional)</div>
+            
+            <!-- CAMPO DE FRASE -->
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; color: var(--dark);">📝 Frase/Texto:</label>
+                <input type="text" id="phraseInput" placeholder="Ex: Empresa XYZ - 2024" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px;">
+            </div>
+
+            <!-- UPLOAD DE IMAGEM -->
+            <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; color: var(--dark);">🖼️ Imagem/Logo:</label>
+            <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <div class="upload-icon">📎</div>
+                <div class="upload-text">Clique ou arraste para anexar imagem/logo</div>
+                <input type="file" class="file-input" id="fileInput" onchange="handleFileSelect(event)">
+            </div>
+            <div id="filePreview"></div>
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn-full btn-success" id="addBtn" onclick="addToCart()">🛒 Adicionar ao Carrinho</button>
+            <button class="btn-full btn-cancel" onclick="closeModal()">❌ Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- CART PAGE -->
+<div id="cartPage" style="display:none;">
+    <div class="container">
+        <div class="cart-page">
+            <h1 class="cart-title">🛒 Seu Carrinho</h1>
+            <div id="cartContent"></div>
+        </div>
+    </div>
+</div>
+
+<!-- WHATSAPP MODAL -->
+<div id="whatsappModal" class="modal">
+    <div class="modal-content whatsapp-modal">
+        <button class="modal-close" onclick="closeWhatsappModal()">✕</button>
+        <h3>📩 Resumo do Pedido</h3>
+        <div id="previewContent" style="margin: 24px 0; padding: 24px; background: var(--light); border-radius: 8px; font-size: 14px; line-height: 1.8;"></div>
+        
+        <!-- INSTRUÇÕES -->
+        <div style="background: rgba(37, 211, 102, 0.1); border-left: 4px solid #25D366; padding: 16px; border-radius: 6px; margin-bottom: 24px; font-size: 13px; line-height: 1.8;">
+            <strong style="color: #25D366; display: block; margin-bottom: 12px;">📝 Como enviar:</strong>
+            <ol style="margin-left: 20px;">
+                <li style="margin-bottom: 8px;"><strong>1.</strong> Clique em <strong>"📥 Baixar Imagem"</strong> (se houver)</li>
+                <li style="margin-bottom: 8px;"><strong>2.</strong> Clique em <strong>"📋 Copiar Resumo"</strong></li>
+                <li style="margin-bottom: 8px;"><strong>3.</strong> Clique em <strong>"💬 Abrir WhatsApp"</strong></li>
+                <li style="margin-bottom: 8px;"><strong>4.</strong> Cole a mensagem (Ctrl+V)</li>
+                <li><strong>5.</strong> Clique em <strong>Anexar (📎)</strong> e selecione a imagem baixada</li>
+            </ol>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;" id="actionButtons"></div>
+        <button class="btn-full btn-success" style="font-size: 16px; padding: 16px;" onclick="openWhatsappDirectAndCopy()">💬 Abrir WhatsApp</button>
+    </div>
+</div>
+
+<div class="footer">
+    <p>💬 WhatsApp: <strong>(44) 99114-0169</strong></p>
+    <p>© 2024 Catálogo de Brindes. Todos os direitos reservados.</p>
+</div>
+
+<script>
+const WHATSAPP_NUMBER = "44991140169";
+const ITEMS_PER_PAGE = 12;
+
+// PRODUTOS COM VARIAÇÕES
+const products = [
+    {
+        id: 1,
+        name: "Garrafa Térmica",
+        emoji: "🧊",
+        sizes: ["400ml", "450ml", "500ml", "550ml", "600ml", "700ml", "750ml", "800ml", "850ml", "900ml", "950ml", "1L", "1,2L", "1,4L", "1,5L"],
+        specs: {
+            material: "Aço Inoxidável",
+            personalizacao: "Gravação a Laser"
+        }
+    },
+    {
+        id: 2,
+        name: "Caneca Personalizada",
+        emoji: "☕",
+        sizes: ["300ml", "350ml", "400ml", "450ml", "500ml"],
+        specs: {
+            material: "Cerâmica",
+            cores: "Branco",
+            personalizacao: "Impressão Digital"
+        }
+    },
+    {
+        id: 3,
+        name: "Squeeze",
+        emoji: "💧",
+        sizes: ["400ml", "500ml", "600ml", "700ml", "800ml"],
+        specs: {
+            material: "Plástico Reciclado",
+            cores: "Múltiplas",
+            personalizacao: "Serigrafia"
+        }
+    },
+    {
+        id: 4,
+        name: "Bolsa Tote Bag",
+        emoji: "👜",
+        sizes: ["Padrão"],
+        specs: {
+            material: "Lona Algodão",
+            dimensoes: "40 x 35 cm",
+            alças: "Ajustáveis",
+            personalizacao: "Serigrafia"
+        }
+    },
+    {
+        id: 5,
+        name: "Mochila Corporativa",
+        emoji: "🎒",
+        sizes: ["25L", "35L", "40L"],
+        specs: {
+            material: "Poliéster",
+            compartimentos: "4+",
+            personalizacao: "Bordado"
+        }
+    },
+    {
+        id: 6,
+        name: "Fone Bluetooth",
+        emoji: "🎧",
+        sizes: ["Padrão"],
+        specs: {
+            tipo: "Wireless",
+            bateria: "20h",
+            material: "Plástico",
+            personalizacao: "Gravação"
+        }
+    },
+    {
+        id: 7,
+        name: "Carregador USB Rápido",
+        emoji: "🔌",
+        sizes: ["20W", "30W", "65W"],
+        specs: {
+            saída: "Rápida",
+            material: "ABS",
+            personalizacao: "Logo"
+        }
+    },
+    {
+        id: 8,
+        name: "Caixa de Som Portátil",
+        emoji: "🔊",
+        sizes: ["Pequena (5W)", "Média (10W)", "Grande (20W)"],
+        specs: {
+            bluetooth: "5.0",
+            bateria: "12h",
+            personalizacao: "Serigrafia"
+        }
+    },
+    {
+        id: 9,
+        name: "Lanterna LED",
+        emoji: "🔦",
+        sizes: ["100 lumens", "200 lumens", "300 lumens"],
+        specs: {
+            tipo: "Recarregável",
+            material: "Alumínio",
+            personalizacao: "Gravação"
+        }
+    },
+    {
+        id: 10,
+        name: "Guarda-Chuva Automático",
+        emoji: "☂️",
+        sizes: ["85cm", "105cm", "120cm"],
+        specs: {
+            material: "Poliéster",
+            cores: "Múltiplas",
+            personalizacao: "Logo Impressa"
+        }
+    },
+    {
+        id: 11,
+        name: "Mousepad Personalizado",
+        emoji: "🖱️",
+        sizes: ["Pequeno (20x20cm)", "Médio (25x20cm)", "Grande (30x25cm)"],
+        specs: {
+            material: "Borracha",
+            antiderrapante: "Sim",
+            personalizacao: "Impressão Digital"
+        }
+    },
+    {
+        id: 12,
+        name: "Power Bank",
+        emoji: "🔋",
+        sizes: ["10000mAh", "20000mAh", "30000mAh"],
+        specs: {
+            saída: "2 USB",
+            tempo: "3-4h carga",
+            personalizacao: "Serigrafia"
+        }
+    },
+    {
+        id: 13,
+        name: "Relógio Digital",
+        emoji: "⏰",
+        sizes: ["Padrão"],
+        specs: {
+            display: "LED Azul",
+            alimentação: "USB",
+            alarme: "Duplo",
+            personalizacao: "Gravação"
+        }
+    },
+    {
+        id: 14,
+        name: "Luminária de Mesa",
+        emoji: "💡",
+        sizes: ["3W LED", "5W LED", "8W LED"],
+        specs: {
+            temperatura: "Ajustável",
+            material: "Plástico",
+            personalizacao: "Logo"
+        }
+    },
+    {
+        id: 15,
+        name: "Chaveiro Personalizado",
+        emoji: "🔑",
+        sizes: ["Pequeno", "Médio", "Grande"],
+        specs: {
+            material: "Acrílico",
+            gravacao: "Laser",
+            personalizacao: "Logo"
+        }
+    },
+    {
+        id: 16,
+        name: "Bloco de Notas",
+        emoji: "📝",
+        sizes: ["50 folhas", "100 folhas", "150 folhas"],
+        specs: {
+            papel: "Reciclado",
+            tamanho: "14 x 10 cm",
+            personalizacao: "Capa Impressa"
+        }
+    }
+];
+
+let cart = [];
+let currentPage = 1;
+let selectedProduct = null;
+let selectedSize = null;
+let selectedPersonalization = null;
+let quantity = 1;
+
+function renderHome() {
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('cartPage').style.display = 'none';
+    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const productsToShow = products.slice(start, start + ITEMS_PER_PAGE);
+    
+    document.getElementById('gridContainer').innerHTML = productsToShow.map(p => `
+        <div class="card" onclick="openProduct(${p.id})">
+            <div class="card-image">${p.emoji}</div>
+            <div class="card-body">
+                <div class="card-title">${p.name}</div>
+                <button class="card-btn">Ver Detalhes</button>
+            </div>
+        </div>
+    `).join('');
+    
+    document.getElementById('currentPage').textContent = currentPage;
+    document.getElementById('totalPages').textContent = totalPages;
+    document.getElementById('prevBtn').disabled = currentPage === 1;
+    document.getElementById('nextBtn').disabled = currentPage === totalPages;
+    
+    document.getElementById('pageNumbers').innerHTML = Array.from({length: totalPages}, (_, i) => `
+        <button class="page-btn ${i+1===currentPage ? 'active' : ''}" onclick="goToPage(${i+1})">${i+1}</button>
+    `).join('');
+}
+
+function openProduct(id) {
+    selectedProduct = products.find(p => p.id === id);
+    selectedSize = null;
+    quantity = 1;
+    selectedPersonalization = null;
+    document.getElementById('qtyInput').value = 1;
+    document.getElementById('phraseInput').value = '';
+    document.getElementById('filePreview').innerHTML = '';
+    document.getElementById('fileInput').value = '';
+    
+    document.getElementById('modalEmoji').textContent = selectedProduct.emoji;
+    document.getElementById('modalTitle').textContent = selectedProduct.name;
+    document.getElementById('modalSpecs').innerHTML = Object.entries(selectedProduct.specs).map(([k,v]) => `
+        <div class="spec-row"><strong>${k.charAt(0).toUpperCase() + k.slice(1)}:</strong> ${v}</div>
+    `).join('');
+    
+    // RENDERIZAR SELETOR DE TAMANHO
+    document.getElementById('sizeGroupContainer').innerHTML = `
+        <div class="size-group">
+            <label class="size-label">Tamanho/Variedade:</label>
+            <div class="size-grid">
+                ${selectedProduct.sizes.map(size => `
+                    <button class="size-btn" onclick="selectSize('${size}')">${size}</button>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    
+    updateAddButton();
+    document.getElementById('productModal').classList.add('show');
+}
+
+function selectSize(size) {
+    selectedSize = size;
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.classList.remove('selected');
+        if(btn.textContent === size) btn.classList.add('selected');
+    });
+    updateAddButton();
+}
+
+function updateAddButton() {
+    const btn = document.getElementById('addBtn');
+    if(!selectedSize) {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.textContent = '⚠️ Selecione um tamanho';
+    } else {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.textContent = '🛒 Adicionar ao Carrinho';
+    }
+}
+
+function closeModal() {
+    document.getElementById('productModal').classList.remove('show');
+}
+
+function increaseQty() {
+    quantity++;
+    document.getElementById('qtyInput').value = quantity;
+}
+
+function decreaseQty() {
+    if(quantity > 1) quantity--;
+    document.getElementById('qtyInput').value = quantity;
+}
+
+document.addEventListener('change', (e) => {
+    if(e.target.id === 'qtyInput') quantity = parseInt(e.target.value) || 1;
+});
+
+function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('uploadArea').classList.add('dragover');
+}
+
+function handleDragLeave(e) {
+    document.getElementById('uploadArea').classList.remove('dragover');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('uploadArea').classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if(file) processFile(file);
+}
+
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if(file) processFile(file);
+}
+
+document.getElementById('uploadArea').onclick = () => document.getElementById('fileInput').click();
+
+function processFile(file) {
+    selectedPersonalization = {
+        name: file.name,
+        file: file,
+        isImage: file.type.startsWith('image/'),
+        phrase: ''
+    };
+    
+    if(selectedPersonalization.isImage) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            selectedPersonalization.preview = e.target.result;
+            document.getElementById('filePreview').innerHTML = `
+                <div class="file-preview">
+                    <img src="${e.target.result}" alt="preview">
+                    <div class="file-name">✓ ${file.name}</div>
+                    <button class="btn-cancel" style="margin-top:12px; width:100%;" onclick="clearFile()">❌ Remover</button>
+                </div>
+            `;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById('filePreview').innerHTML = `
+            <div class="file-preview">
+                <div class="file-name">✓ ${file.name}</div>
+                <button class="btn-cancel" style="margin-top:12px; width:100%;" onclick="clearFile()">❌ Remover</button>
+            </div>
+        `;
+    }
+}
+
+function clearFile() {
+    selectedPersonalization = null;
+    document.getElementById('filePreview').innerHTML = '';
+    document.getElementById('fileInput').value = '';
+}
+
+function addToCart() {
+    if(!selectedProduct || !selectedSize || quantity < 1) return;
+    
+    // Guardar frase se foi digitada
+    const phrase = document.getElementById('phraseInput')?.value || '';
+    
+    const cartItem = {
+        ...selectedProduct,
+        selectedSize: selectedSize,
+        cartQuantity: quantity,
+        personalization: selectedPersonalization ? {
+            ...selectedPersonalization,
+            phrase: phrase
+        } : (phrase ? { phrase: phrase, name: 'Frase personalizada', isImage: false, file: null } : null),
+        cartId: Date.now()
+    };
+    
+    cart.push(cartItem);
+    
+    showToast(`${selectedProduct.name} (${selectedSize}) adicionado ao carrinho!`);
+    updateCartBadge();
+    closeModal();
+    showHome();
+}
+
+function updateCartBadge() {
+    const btn = document.getElementById('cartBtn');
+    if(cart.length > 0) {
+        btn.style.display = 'inline-flex';
+        document.getElementById('cartCount').textContent = cart.length;
+    } else {
+        btn.style.display = 'none';
+    }
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.cartId !== id);
+    updateCartBadge();
+    renderCart();
+    showToast('Produto removido');
+}
+
+function renderCart() {
+    const content = document.getElementById('cartContent');
+    if(cart.length === 0) {
+        content.innerHTML = `<div class="empty-cart">Carrinho vazio. <a href="#" onclick="showHome(); return false;">Voltar ao catálogo</a></div>`;
+    } else {
+        content.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${item.name}</div>
+                    <div class="cart-item-detail">📏 Tamanho: <strong>${item.selectedSize}</strong></div>
+                    <div class="cart-item-detail">📦 Quantidade: <strong>${item.cartQuantity}x</strong></div>
+                    ${item.personalization?.phrase ? `<div class="cart-personal">📝 Frase: "${item.personalization.phrase}"</div>` : ''}
+                    ${item.personalization?.isImage ? `<div class="cart-personal">🖼️ Imagem: ${item.personalization.name}</div>` : ''}
+                </div>
+                <button class="remove-btn" onclick="removeFromCart(${item.cartId})">🗑️ Remover</button>
+            </div>
+        `).join('') + `
+            <button class="btn-full btn-success" style="margin-top:32px;" onclick="openWhatsappModal()">💬 Enviar Orçamento para WhatsApp</button>
+        `;
+    }
+}
+
+function showCart() {
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('cartPage').style.display = 'block';
+    renderCart();
+}
+
+function showHome() {
+    document.getElementById('cartPage').style.display = 'none';
+    document.getElementById('homePage').style.display = 'block';
+    renderHome();
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #25D366;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 9999;
+        font-weight: 600;
+        animation: slideIn 0.3s ease;
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+}
+
+function openWhatsappModal() {
+    // Guardar a frase antes de abrir o modal
+    cart.forEach(item => {
+        if(item.personalization) {
+            item.personalization.phrase = document.getElementById('phraseInput')?.value || '';
+        }
+    });
+    
+    // Gerar preview dos itens
+    const previewHTML = cart.map((item, i) => `
+        <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
+            <div style="font-weight: 600; margin-bottom: 8px;">${i+1}. ${item.name}</div>
+            <div>📏 Tamanho: <strong>${item.selectedSize}</strong></div>
+            <div>📦 Quantidade: <strong>${item.cartQuantity}x</strong></div>
+            ${item.personalization?.phrase ? `<div>📝 Frase: <strong>"${item.personalization.phrase}"</strong></div>` : ''}
+            ${item.personalization?.isImage ? `<div>🖼️ Com Imagem: <strong>${item.personalization.name}</strong></div>` : ''}
+        </div>
+    `).join('');
+    
+    document.getElementById('previewContent').innerHTML = previewHTML;
+    
+    // Gerar botões de ação
+    const hasImage = cart.some(item => item.personalization?.isImage);
+    let actionButtonsHTML = '';
+    
+    if(hasImage) {
+        actionButtonsHTML += `<button class="btn-full" style="background: #4CAF50; color: white; padding: 14px;" onclick="downloadImages()">📥 Baixar Imagem</button>`;
+    }
+    
+    actionButtonsHTML += `<button class="btn-full" style="background: #2196F3; color: white; padding: 14px;" onclick="copyResumo()">📋 Copiar Resumo</button>`;
+    
+    document.getElementById('actionButtons').innerHTML = actionButtonsHTML;
+    document.getElementById('whatsappModal').classList.add('show');
+}
+
+function closeWhatsappModal() {
+    document.getElementById('whatsappModal').classList.remove('show');
+}
+
+function generateMessage() {
+    let msg = `*📋 PEDIDO DE ORÇAMENTO*\n\n`;
+    msg += `*DETALHES DO PEDIDO:*\n\n`;
+    
+    cart.forEach((item, i) => {
+        msg += `*${i+1}. ${item.name}*\n`;
+        msg += `   📏 Tamanho: ${item.selectedSize}\n`;
+        msg += `   📦 Quantidade: ${item.cartQuantity}x\n`;
+        
+        if(item.personalization?.phrase) {
+            msg += `   📝 Frase: "${item.personalization.phrase}"\n`;
+        }
+        if(item.personalization?.isImage) {
+            msg += `   🖼️ Arquivo: ${item.personalization.name}\n`;
+        }
+        msg += `\n`;
+    });
+    
+    msg += `*TOTAL: ${cart.length} item(ns)*\n\n`;
+    msg += `---\nEnviado via Catálogo Online`;
+    return msg;
+}
+
+function downloadImages() {
+    cart.forEach((item, index) => {
+        if(item.personalization?.isImage && item.personalization?.preview) {
+            const link = document.createElement('a');
+            link.href = item.personalization.preview;
+            link.download = `${item.name.replace(/\s+/g, '_')}_${item.selectedSize.replace(/\s+/g, '_')}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    });
+    showToast('✓ Imagem(ns) baixada(s)!');
+}
+
+function copyResumo() {
+    const msg = generateMessage();
+    navigator.clipboard.writeText(msg).then(() => {
+        showToast('✓ Resumo copiado!');
+    });
+}
+
+function openWhatsappDirectAndCopy() {
+    const msg = generateMessage();
+    navigator.clipboard.writeText(msg).then(() => {
+        setTimeout(() => {
+            const encodedMsg = encodeURIComponent(msg);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
+            closeWhatsappModal();
+        }, 300);
+    });
+}
+
+function prevPage() { if(currentPage > 1) { currentPage--; renderHome(); } }
+function nextPage() { const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE); if(currentPage < totalPages) { currentPage++; renderHome(); } }
+function goToPage(page) { currentPage = page; renderHome(); }
+
+function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// INIT
+renderHome();
+</script>
+
+</body>
+</html>

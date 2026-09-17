@@ -42,7 +42,7 @@
             align-items: center;
             border-bottom: 1px solid #ddd;
             position: sticky;
-            top: 80px;
+            top: 85px;
             z-index: 50;
         }
         
@@ -56,6 +56,7 @@
             font-weight: 600;
             margin-left: auto;
             display: none;
+            font-size: 14px;
         }
         
         .cart-btn.show {
@@ -72,7 +73,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 24px;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
         
         .product-card {
@@ -99,9 +100,6 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            font-weight: 600;
-            font-size: 36px;
-            color: white;
         }
         
         .product-image img {
@@ -171,11 +169,19 @@
             background: #20ba5a;
         }
         
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
         .pagination {
             display: flex;
             justify-content: center;
             gap: 8px;
-            margin: 40px 0;
             flex-wrap: wrap;
         }
         
@@ -187,12 +193,35 @@
             border-radius: 6px;
             font-weight: 600;
             transition: all 0.2s;
+            font-size: 14px;
         }
         
         .page-btn.active {
             background: #25D366;
             color: white;
             border-color: #25D366;
+        }
+        
+        .nav-btn {
+            padding: 10px 16px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.2s;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background: #f0f0f0;
+            border-color: #25D366;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         
         /* MODAL */
@@ -222,13 +251,11 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
+            display: flex;
+            flex-direction: column;
         }
         
         .modal-image {
-            grid-column: 1 / -1;
             width: 100%;
             height: 300px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -245,25 +272,27 @@
         }
         
         .modal-body {
-            grid-column: 1 / -1;
             padding: 28px;
+            flex: 1;
+            overflow-y: auto;
         }
         
         .modal-close {
             position: absolute;
             top: 16px;
             right: 16px;
-            background: none;
+            background: rgba(0,0,0,0.5);
+            color: white;
             border: none;
             font-size: 28px;
             cursor: pointer;
-            color: white;
             z-index: 10;
             width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
         }
         
         .modal-code {
@@ -388,9 +417,6 @@
         }
         
         @media (max-width: 768px) {
-            .modal-content {
-                grid-template-columns: 1fr;
-            }
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 16px;
@@ -413,7 +439,12 @@
     
     <div class="container">
         <div class="products-grid" id="productsGrid"></div>
-        <div class="pagination" id="paginationContainer"></div>
+        
+        <div class="pagination-wrapper">
+            <button class="nav-btn" id="prevPageGroup" onclick="prevPageGroup()">← Anterior</button>
+            <div class="pagination" id="paginationContainer"></div>
+            <button class="nav-btn" id="nextPageGroup" onclick="nextPageGroup()">Próximo →</button>
+        </div>
     </div>
     
     <!-- MODAL -->
@@ -470,12 +501,15 @@
         const WHATSAPP = '5544991140169';
         const SHEET_ID = '1qQXicJuTs-0JyoaylNk1wPfoaCBdtoNh7-vmvjmvPQI';
         const PER_PAGE = 12;
+        const PAGES_PER_GROUP = 9;
         
         let products = [];
         let cart = [];
         let page = 1;
+        let pageGroup = 0;
         let selected = null;
         let qty = 1;
+        let totalPages = 0;
         
         async function loadProducts() {
             try {
@@ -485,11 +519,19 @@
                 const lines = csv.trim().split('\n');
                 
                 products = lines.slice(1).map(line => {
-                    const [codigo, nome, medidas, gravacao, peso, imagem] = line.split(',').map(x => x.trim());
-                    return { codigo, nome, medidas, gravacao, peso, imagem };
+                    const parts = line.split(',');
+                    return {
+                        codigo: parts[0]?.trim() || '',
+                        nome: parts[1]?.trim() || '',
+                        medidas: parts[2]?.trim() || '',
+                        gravacao: parts[3]?.trim() || '',
+                        peso: parts[4]?.trim() || '',
+                        imagem: parts[5]?.trim() || ''
+                    };
                 }).filter(p => p.codigo);
                 
                 console.log(`${products.length} produtos carregados`);
+                totalPages = Math.ceil(products.length / PER_PAGE);
                 document.getElementById('statusText').textContent = `${products.length} produtos disponíveis`;
                 renderPage();
             } catch (e) {
@@ -505,7 +547,7 @@
             const html = pageProds.map(p => `
                 <div class="product-card" onclick="openProduct('${p.codigo}')">
                     <div class="product-image">
-                        <img src="${p.imagem || 'https://via.placeholder.com/280x220?text=' + p.codigo}" alt="${p.nome}" onerror="this.style.display='none'">
+                        <img src="${p.imagem}" alt="${p.nome}" onerror="this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'">
                     </div>
                     <div class="product-info">
                         <div class="product-code">${p.codigo}</div>
@@ -519,13 +561,26 @@
                 </div>
             `).join('');
             
-            document.getElementById('productsGrid').innerHTML = html;
+            document.getElementById('productsGrid').innerHTML = html || '<p>Nenhum produto encontrado</p>';
+            renderPagination();
+        }
+        
+        function renderPagination() {
+            const start = pageGroup * PAGES_PER_GROUP + 1;
+            const end = Math.min(start + PAGES_PER_GROUP - 1, totalPages);
             
-            const pages = Math.ceil(products.length / PER_PAGE);
-            const pag = Array.from({length: pages}, (_, i) => `
-                <button class="page-btn ${i+1 === page ? 'active' : ''}" onclick="goPage(${i+1})">${i+1}</button>
-            `).join('');
-            document.getElementById('paginationContainer').innerHTML = pag;
+            const pag = [];
+            for (let i = start; i <= end; i++) {
+                pag.push(`
+                    <button class="page-btn ${i === page ? 'active' : ''}" onclick="goPage(${i})">${i}</button>
+                `);
+            }
+            
+            document.getElementById('paginationContainer').innerHTML = pag.join('');
+            
+            // Desabilitar botões de navegação
+            document.getElementById('prevPageGroup').disabled = pageGroup === 0;
+            document.getElementById('nextPageGroup').disabled = end >= totalPages;
         }
         
         function openProduct(codigo) {
@@ -538,16 +593,12 @@
             
             document.getElementById('modalCode').textContent = selected.codigo;
             document.getElementById('modalName').textContent = selected.nome;
-            document.getElementById('modalMedidas').textContent = selected.medidas + ' cm';
-            document.getElementById('modalGravacao').textContent = selected.gravacao + ' cm';
-            document.getElementById('modalPeso').textContent = selected.peso + ' g';
+            document.getElementById('modalMedidas').textContent = selected.medidas;
+            document.getElementById('modalGravacao').textContent = selected.gravacao;
+            document.getElementById('modalPeso').textContent = selected.peso;
             
             const img = document.getElementById('modalImage');
-            if (selected.imagem) {
-                img.innerHTML = `<img src="${selected.imagem}" alt="${selected.nome}" onerror="this.style.display='none'">`;
-            } else {
-                img.innerHTML = `<img src="https://via.placeholder.com/700x300?text=${selected.codigo}" alt="${selected.nome}">`;
-            }
+            img.innerHTML = `<img src="${selected.imagem}" alt="${selected.nome}" onerror="this.parentElement.innerHTML='<div style=\\'color:white;font-size:36px;\\'>🎁</div>'">`;
             
             document.getElementById('productModal').classList.add('show');
         }
@@ -581,7 +632,24 @@
             window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
         }
         
-        function goPage(p) { page = p; renderPage(); scrollTo(0,0); }
+        function goPage(p) { page = p; renderPage(); window.scrollTo(0, 0); }
+        
+        function prevPageGroup() {
+            if (pageGroup > 0) {
+                pageGroup--;
+                page = pageGroup * PAGES_PER_GROUP + 1;
+                renderPage();
+            }
+        }
+        
+        function nextPageGroup() {
+            const maxPageGroup = Math.ceil(totalPages / PAGES_PER_GROUP) - 1;
+            if (pageGroup < maxPageGroup) {
+                pageGroup++;
+                page = pageGroup * PAGES_PER_GROUP + 1;
+                renderPage();
+            }
+        }
         
         loadProducts();
     </script>

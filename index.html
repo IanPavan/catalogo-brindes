@@ -54,89 +54,43 @@
             margin-left: auto;
         }
         
-        .btn-primary:hover { background: #20ba5a; }
-        
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
         
-        .home-page {
-            display: block;
-        }
-        
-        .home-page.hidden {
-            display: none;
-        }
-        
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
             margin-bottom: 40px;
         }
         
         .card {
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
-        
-        .card-image {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            min-height: 100px;
+            text-align: center;
         }
         
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
-        .card-content {
-            padding: 16px;
-        }
-        
-        .card-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-            font-size: 16px;
-        }
-        
-        .card-desc {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 12px;
-        }
-        
-        .card-btn {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-        }
-        
-        .card-btn:hover {
-            background: #20ba5a;
+        .card-code {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
         }
         
         .pagination {
@@ -174,6 +128,7 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         
         .modal.show {
@@ -184,8 +139,8 @@
             background: white;
             border-radius: 16px;
             padding: 24px;
-            max-width: 500px;
-            width: 90%;
+            max-width: 600px;
+            width: 100%;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
@@ -204,7 +159,7 @@
         
         .modal-image {
             width: 100%;
-            height: 200px;
+            height: 250px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 8px;
             margin-bottom: 16px;
@@ -220,50 +175,39 @@
             object-fit: cover;
         }
         
-        .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        
-        .modal-desc {
-            color: #666;
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-        
-        .size-group {
-            margin-bottom: 20px;
-        }
-        
-        .size-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .size-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 8px;
-        }
-        
-        .size-btn {
-            padding: 10px;
-            border: 2px solid var(--border);
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        
-        .size-btn.selected {
+        .modal-code {
             background: var(--primary);
             color: white;
-            border-color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .info-group {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: var(--dark);
         }
         
         .qty-group {
@@ -355,68 +299,9 @@
             color: white;
         }
         
-        .btn-success:hover {
-            background: #20ba5a;
-        }
-        
         .btn-cancel {
             background: #f0f0f0;
             color: var(--dark);
-        }
-        
-        .btn-cancel:hover {
-            background: #e0e0e0;
-        }
-        
-        /* CART */
-        .cart-page {
-            display: none;
-        }
-        
-        .cart-page.show {
-            display: block;
-        }
-        
-        .cart-title {
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        
-        .cart-item {
-            background: white;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border);
-        }
-        
-        .cart-item-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .cart-item-detail {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 4px;
-        }
-        
-        .remove-btn {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-        
-        .empty-cart {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
         }
         
         .loading {
@@ -429,8 +314,8 @@
 <body>
     <!-- NAVBAR -->
     <div class="navbar">
-        <div class="logo" onclick="showHome()">🎁 Brindes</div>
-        <button class="btn" onclick="showHome()">Catálogo</button>
+        <div class="logo" onclick="showHome()">🎁 Catálogo</div>
+        <button class="btn" onclick="showHome()">Produtos</button>
         <button class="btn btn-primary" id="cartBtn" style="display:none;" onclick="showCart()">
             🛒 Carrinho <span id="cartCount">0</span>
         </button>
@@ -442,23 +327,27 @@
         <div id="paginationContainer" class="pagination"></div>
     </div>
 
-    <!-- CART PAGE -->
-    <div id="cartPage" class="container">
-        <h1 class="cart-title">🛒 Seu Carrinho</h1>
-        <div id="cartContent"></div>
-    </div>
-
     <!-- PRODUCT MODAL -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-code" id="modalCode"></div>
             <div class="modal-image" id="modalImage"></div>
             <h2 class="modal-title" id="modalTitle"></h2>
-            <p class="modal-desc" id="modalDesc"></p>
-
-            <div class="size-group">
-                <label class="size-label">Tamanho/Variedade:</label>
-                <div class="size-grid" id="sizeGrid"></div>
+            
+            <div class="info-group">
+                <div class="info-label">Medidas</div>
+                <div class="info-value" id="modalMedidas"></div>
+            </div>
+            
+            <div class="info-group">
+                <div class="info-label">Medidas para Gravação</div>
+                <div class="info-value" id="modalMedidasGravacao"></div>
+            </div>
+            
+            <div class="info-group">
+                <div class="info-label">Peso</div>
+                <div class="info-value" id="modalPeso"></div>
             </div>
 
             <div class="qty-group">
@@ -477,68 +366,50 @@
 
             <div class="phrase-hint">
                 <strong>📎 Arquivos/Fotos?</strong><br>
-                Caso queira enviar logo, imagem ou qualquer arquivo para personalização, envie <strong>direto no WhatsApp</strong> após fazer seu orçamento!
+                Caso queira enviar logo, imagem ou arquivo para personalização, envie <strong>direto no WhatsApp</strong> após fazer seu orçamento!
             </div>
 
             <div class="modal-buttons">
-                <button class="btn-full btn-success" onclick="addToCart()">🛒 Adicionar ao Carrinho</button>
-                <button class="btn-full btn-cancel" onclick="closeModal()">❌ Cancelar</button>
+                <button class="btn-full btn-success" onclick="addToCart()">🛒 Adicionar</button>
+                <button class="btn-full btn-cancel" onclick="closeModal()">❌ Fechar</button>
             </div>
-        </div>
-    </div>
-
-    <!-- WHATSAPP MODAL -->
-    <div id="whatsappModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeWhatsappModal()">✕</button>
-            <h3>📩 Resumo do Pedido</h3>
-            <div id="previewContent" style="margin: 24px 0; padding: 24px; background: var(--light); border-radius: 8px; font-size: 14px; line-height: 1.8;"></div>
-            
-            <div class="phrase-hint">
-                <strong style="color: #25D366; display: block; margin-bottom: 8px;">✅ Próximo passo:</strong>
-                <p>Clique no botão abaixo para enviar o orçamento pelo WhatsApp. Se tiver arquivos ou fotos para personalização, envie direto na conversa!</p>
-            </div>
-
-            <button class="btn-full btn-success" style="font-size: 16px; padding: 16px;" onclick="openWhatsappDirect()">💬 Enviar Orçamento para WhatsApp</button>
         </div>
     </div>
 
     <script>
         const WHATSAPP_NUMBER = '5544991140169';
         const SHEET_ID = '1qQXicJuTs-0JyoaylNk1wPfoaCBdtoNh7-vmvjmvPQI';
-        const ITEMS_PER_PAGE = 12;
+        const ITEMS_PER_PAGE = 60;
         
         let products = [];
         let cart = [];
         let currentPage = 1;
         let selectedProduct = null;
-        let selectedSize = null;
         let quantity = 1;
 
-        // CARREGAR DADOS DA PLANILHA
         async function loadProducts() {
             try {
                 const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
                 const response = await fetch(csvUrl);
                 const csv = await response.text();
                 
-                // Parse CSV
                 const lines = csv.trim().split('\n');
                 const headers = lines[0].split(',');
                 
                 products = lines.slice(1).map(line => {
                     const values = line.split(',');
                     return {
-                        id: parseInt(values[0]),
-                        name: values[1]?.trim() || '',
-                        image: values[2]?.trim() || '',
-                        material: values[3]?.trim() || '',
-                        description: values[4]?.trim() || '',
-                        sizes: values[5]?.trim().split(';').map(s => s.trim()) || [],
-                        specs: values[6]?.trim() || ''
+                        id: values[0]?.trim() || '',
+                        codigo: values[0]?.trim() || '',
+                        nome: values[1]?.trim() || '',
+                        medidas: values[2]?.trim() || '',
+                        medidas_gravacao: values[3]?.trim() || '',
+                        peso: values[4]?.trim() || '',
+                        imagem: values[5]?.trim() || ''
                     };
-                }).filter(p => p.name);
+                }).filter(p => p.codigo && p.nome);
                 
+                console.log(`Carregados ${products.length} produtos`);
                 renderHome();
             } catch (error) {
                 console.error('Erro ao carregar produtos:', error);
@@ -552,21 +423,13 @@
             const pageProducts = products.slice(start, end);
 
             const html = pageProducts.map(p => `
-                <div class="card" onclick="openProduct(${p.id})">
-                    <div class="card-image">
-                        <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">${p.name}</div>
-                        <div class="card-desc">${p.description}</div>
-                        <button class="card-btn" onclick="event.stopPropagation(); openProduct(${p.id})">Personalizar</button>
-                    </div>
+                <div class="card" onclick="openProduct('${p.codigo}')">
+                    <div class="card-code">${p.codigo}</div>
                 </div>
             `).join('');
             
             document.getElementById('productsContainer').innerHTML = html || '<p class="loading">Nenhum produto encontrado</p>';
             
-            // Paginação
             const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
             const paginationHtml = Array.from({length: totalPages}, (_, i) => `
                 <button class="page-btn ${i+1 === currentPage ? 'active' : ''}" onclick="goToPage(${i+1})">${i+1}</button>
@@ -574,39 +437,28 @@
             document.getElementById('paginationContainer').innerHTML = paginationHtml;
         }
 
-        function openProduct(id) {
-            selectedProduct = products.find(p => p.id === id);
+        function openProduct(codigo) {
+            selectedProduct = products.find(p => p.codigo === codigo);
             if (!selectedProduct) return;
             
-            selectedSize = null;
             quantity = 1;
-            
             document.getElementById('qtyInput').value = 1;
             document.getElementById('phraseInput').value = '';
             
+            document.getElementById('modalCode').textContent = selectedProduct.codigo;
+            document.getElementById('modalTitle').textContent = selectedProduct.nome;
+            document.getElementById('modalMedidas').textContent = selectedProduct.medidas;
+            document.getElementById('modalMedidasGravacao').textContent = selectedProduct.medidas_gravacao;
+            document.getElementById('modalPeso').textContent = selectedProduct.peso;
+            
             const modalImage = document.getElementById('modalImage');
-            if (selectedProduct.image) {
-                modalImage.innerHTML = `<img src="${selectedProduct.image}" alt="${selectedProduct.name}">`;
+            if (selectedProduct.imagem) {
+                modalImage.innerHTML = `<img src="${selectedProduct.imagem}" alt="${selectedProduct.nome}" onerror="this.style.display='none'">`;
             } else {
                 modalImage.innerHTML = '';
             }
             
-            document.getElementById('modalTitle').textContent = selectedProduct.name;
-            document.getElementById('modalDesc').textContent = selectedProduct.description;
-            
-            document.getElementById('sizeGrid').innerHTML = selectedProduct.sizes.map(size => `
-                <button class="size-btn" onclick="selectSize('${size}')">${size}</button>
-            `).join('');
-            
             document.getElementById('productModal').classList.add('show');
-        }
-
-        function selectSize(size) {
-            selectedSize = size;
-            document.querySelectorAll('.size-btn').forEach(btn => {
-                btn.classList.remove('selected');
-                if (btn.textContent === size) btn.classList.add('selected');
-            });
         }
 
         function decreaseQty() {
@@ -620,13 +472,12 @@
         }
 
         function addToCart() {
-            if (!selectedProduct || !selectedSize || quantity < 1) return;
+            if (!selectedProduct || quantity < 1) return;
             
             const phrase = document.getElementById('phraseInput').value || '';
             
             cart.push({
                 ...selectedProduct,
-                selectedSize,
                 cartQuantity: quantity,
                 phrase,
                 cartId: Date.now()
@@ -649,60 +500,23 @@
 
         function showHome() {
             document.getElementById('homePage').style.display = 'block';
-            document.getElementById('cartPage').classList.remove('show');
             renderHome();
         }
 
         function showCart() {
-            document.getElementById('homePage').style.display = 'none';
-            document.getElementById('cartPage').classList.add('show');
-            
             if (cart.length === 0) {
-                document.getElementById('cartContent').innerHTML = '<div class="empty-cart">Carrinho vazio. <a href="#" onclick="showHome(); return false;">Voltar ao catálogo</a></div>';
+                alert('Carrinho vazio');
                 return;
             }
-            
-            const html = cart.map((item, idx) => `
-                <div class="cart-item">
-                    <div class="cart-item-title">${idx+1}. ${item.name}</div>
-                    <div class="cart-item-detail">📏 Tamanho: ${item.selectedSize}</div>
-                    <div class="cart-item-detail">📦 Quantidade: ${item.cartQuantity}x</div>
-                    ${item.phrase ? `<div class="cart-item-detail">📝 Frase: "${item.phrase}"</div>` : ''}
-                    <button class="remove-btn" onclick="removeFromCart(${item.cartId})">🗑️ Remover</button>
-                </div>
-            `).join('');
-            
-            document.getElementById('cartContent').innerHTML = html + `
-                <button class="btn-full btn-success" style="margin-top:32px;" onclick="openWhatsappModal()">💬 Enviar Orçamento para WhatsApp</button>
-            `;
-        }
-
-        function removeFromCart(cartId) {
-            cart = cart.filter(item => item.cartId !== cartId);
-            updateCartBadge();
-            showCart();
+            openWhatsappModal();
         }
 
         function openWhatsappModal() {
-            const previewHTML = cart.map((item, i) => `
-                <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
-                    <div style="font-weight: 600; margin-bottom: 8px;">${i+1}. ${item.name}</div>
-                    <div>📏 Tamanho: <strong>${item.selectedSize}</strong></div>
-                    <div>📦 Quantidade: <strong>${item.cartQuantity}x</strong></div>
-                    ${item.phrase ? `<div>📝 Frase: <strong>"${item.phrase}"</strong></div>` : ''}
-                </div>
-            `).join('');
-            
-            document.getElementById('previewContent').innerHTML = previewHTML;
-            document.getElementById('whatsappModal').classList.add('show');
-        }
-
-        function openWhatsappDirect() {
             let msg = `*📋 PEDIDO DE ORÇAMENTO*\n\n*DETALHES DO PEDIDO:*\n\n`;
             
             cart.forEach((item, i) => {
-                msg += `*${i+1}. ${item.name}*\n`;
-                msg += `   📏 Tamanho: ${item.selectedSize}\n`;
+                msg += `*${i+1}. [${item.codigo}] ${item.nome}*\n`;
+                msg += `   📏 Medidas: ${item.medidas}\n`;
                 msg += `   📦 Quantidade: ${item.cartQuantity}x\n`;
                 if(item.phrase) msg += `   📝 Frase: "${item.phrase}"\n`;
                 msg += `\n`;
@@ -712,15 +526,12 @@
             
             const encoded = encodeURIComponent(msg);
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
-            closeWhatsappModal();
+            cart = [];
+            updateCartBadge();
         }
 
         function closeModal() {
             document.getElementById('productModal').classList.remove('show');
-        }
-
-        function closeWhatsappModal() {
-            document.getElementById('whatsappModal').classList.remove('show');
         }
 
         function goToPage(page) {
@@ -729,7 +540,6 @@
             window.scrollTo(0, 0);
         }
 
-        // Carregar produtos ao iniciar
         loadProducts();
     </script>
 </body>

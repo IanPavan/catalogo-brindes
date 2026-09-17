@@ -3,94 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Brindes</title>
+    <title>Catálogo de Brindes 2025</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        :root {
-            --primary: #25D366;
-            --dark: #333;
-            --light: #f5f5f5;
-            --border: #ddd;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--light);
-            color: var(--dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f8f8;
+            color: #333;
         }
         
-        .navbar {
-            background: white;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-bottom: 1px solid var(--border);
+        .header {
+            background: linear-gradient(135deg, #25D366 0%, #20ba5a 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             position: sticky;
             top: 0;
             z-index: 100;
         }
         
-        .logo {
-            font-weight: 700;
-            font-size: 20px;
-            cursor: pointer;
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
         }
         
-        .btn {
-            background: none;
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
+        .header p {
             font-size: 14px;
-            color: var(--dark);
+            opacity: 0.95;
         }
         
-        .btn-primary {
-            background: var(--primary);
+        .toolbar {
+            background: white;
+            padding: 16px 20px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 80px;
+            z-index: 50;
+        }
+        
+        .cart-btn {
+            background: #25D366;
             color: white;
+            border: none;
+            padding: 10px 20px;
             border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
             margin-left: auto;
+            display: none;
+        }
+        
+        .cart-btn.show {
+            display: block;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px 20px;
         }
         
-        .products {
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 12px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
         }
         
-        .card {
+        .product-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 12px;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100px;
-            text-align: center;
+            overflow: hidden;
+            font-weight: 600;
+            font-size: 36px;
+            color: white;
         }
         
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
-        .card-code {
+        .product-info {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-code {
+            background: #25D366;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
             font-weight: 700;
             font-size: 18px;
-            color: var(--primary);
+            display: inline-block;
+            margin-bottom: 8px;
+            width: fit-content;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            color: #333;
+        }
+        
+        .product-specs {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            flex-grow: 1;
+        }
+        
+        .spec-line {
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        
+        .spec-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .add-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: auto;
+            transition: background 0.3s;
+        }
+        
+        .add-btn:hover {
+            background: #20ba5a;
         }
         
         .pagination {
@@ -102,18 +180,19 @@
         }
         
         .page-btn {
-            padding: 8px 12px;
-            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border: 1px solid #ddd;
             background: white;
             cursor: pointer;
             border-radius: 6px;
-            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
         }
         
         .page-btn.active {
-            background: var(--primary);
+            background: #25D366;
             color: white;
-            border-color: var(--primary);
+            border-color: #25D366;
         }
         
         /* MODAL */
@@ -124,7 +203,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -138,31 +217,21 @@
         .modal-content {
             background: white;
             border-radius: 16px;
-            padding: 24px;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
             position: relative;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
         }
         
         .modal-image {
+            grid-column: 1 / -1;
             width: 100%;
-            height: 250px;
+            height: 300px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
-            margin-bottom: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -175,50 +244,69 @@
             object-fit: cover;
         }
         
+        .modal-body {
+            grid-column: 1 / -1;
+            padding: 28px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .modal-code {
-            background: var(--primary);
+            background: #25D366;
             color: white;
             padding: 8px 16px;
             border-radius: 6px;
             display: inline-block;
             font-weight: 700;
+            font-size: 18px;
             margin-bottom: 12px;
         }
         
-        .modal-title {
-            font-size: 22px;
+        .modal-name {
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            color: #333;
         }
         
-        .info-group {
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
+        .info-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
         }
         
         .info-label {
-            font-weight: 600;
-            color: #666;
+            font-weight: 700;
+            color: #25D366;
             font-size: 12px;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
         
         .info-value {
             font-size: 16px;
-            color: var(--dark);
+            color: #333;
+            line-height: 1.6;
         }
         
         .qty-group {
             margin-bottom: 20px;
-        }
-        
-        .qty-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
         }
         
         .qty-control {
@@ -230,51 +318,44 @@
         .qty-btn {
             width: 40px;
             height: 40px;
-            border: 1px solid var(--border);
+            border: 1px solid #ddd;
             background: white;
             cursor: pointer;
             border-radius: 6px;
+            font-size: 18px;
             font-weight: 600;
-            font-size: 16px;
         }
         
         .qty-input {
             flex: 1;
-            padding: 8px;
-            border: 1px solid var(--border);
+            padding: 10px;
+            border: 1px solid #ddd;
             border-radius: 6px;
+            font-size: 16px;
             text-align: center;
-            font-size: 14px;
         }
         
         .phrase-group {
             margin-bottom: 20px;
         }
         
-        .phrase-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
         .phrase-input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border);
+            padding: 12px;
+            border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
         }
         
         .phrase-hint {
             background: #e8f5e9;
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid #25D366;
             padding: 12px;
             border-radius: 6px;
-            font-size: 13px;
-            line-height: 1.6;
+            font-size: 12px;
             color: #2e7d32;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
         
         .modal-buttons {
@@ -284,262 +365,224 @@
             margin-top: 24px;
         }
         
-        .btn-full {
-            width: 100%;
-            padding: 12px;
+        .btn-primary {
+            background: #25D366;
+            color: white;
             border: none;
+            padding: 14px;
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
             font-size: 14px;
         }
         
-        .btn-success {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .btn-cancel {
+        .btn-secondary {
             background: #f0f0f0;
-            color: var(--dark);
+            color: #333;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
         }
         
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 16px;
+        @media (max-width: 768px) {
+            .modal-content {
+                grid-template-columns: 1fr;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- NAVBAR -->
-    <div class="navbar">
-        <div class="logo" onclick="showHome()">🎁 Catálogo</div>
-        <button class="btn" onclick="showHome()">Produtos</button>
-        <button class="btn btn-primary" id="cartBtn" style="display:none;" onclick="showCart()">
-            🛒 Carrinho <span id="cartCount">0</span>
+    <div class="header">
+        <h1>🎁 Catálogo de Brindes</h1>
+        <p>2025 - Personalizados com sua marca</p>
+    </div>
+    
+    <div class="toolbar">
+        <span id="statusText">Carregando produtos...</span>
+        <button class="cart-btn" id="cartBtn" onclick="openWhatsapp()">
+            🛒 Enviar Orçamento (<span id="cartCount">0</span>)
         </button>
     </div>
-
-    <!-- HOME PAGE -->
-    <div id="homePage" class="container">
-        <div id="productsContainer" class="products"></div>
-        <div id="paginationContainer" class="pagination"></div>
+    
+    <div class="container">
+        <div class="products-grid" id="productsGrid"></div>
+        <div class="pagination" id="paginationContainer"></div>
     </div>
-
-    <!-- PRODUCT MODAL -->
-    <div id="productModal" class="modal">
+    
+    <!-- MODAL -->
+    <div class="modal" id="productModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">✕</button>
-            <div class="modal-code" id="modalCode"></div>
             <div class="modal-image" id="modalImage"></div>
-            <h2 class="modal-title" id="modalTitle"></h2>
-            
-            <div class="info-group">
-                <div class="info-label">Medidas</div>
-                <div class="info-value" id="modalMedidas"></div>
-            </div>
-            
-            <div class="info-group">
-                <div class="info-label">Medidas para Gravação</div>
-                <div class="info-value" id="modalMedidasGravacao"></div>
-            </div>
-            
-            <div class="info-group">
-                <div class="info-label">Peso</div>
-                <div class="info-value" id="modalPeso"></div>
-            </div>
-
-            <div class="qty-group">
-                <label class="qty-label">Quantidade:</label>
-                <div class="qty-control">
-                    <button class="qty-btn" onclick="decreaseQty()">−</button>
-                    <input type="number" class="qty-input" id="qtyInput" value="1" min="1">
-                    <button class="qty-btn" onclick="increaseQty()">+</button>
+            <div class="modal-body">
+                <div class="modal-code" id="modalCode"></div>
+                <h2 class="modal-name" id="modalName"></h2>
+                
+                <div class="info-section">
+                    <div class="info-label">Medidas</div>
+                    <div class="info-value" id="modalMedidas"></div>
                 </div>
-            </div>
-
-            <div class="phrase-group">
-                <label class="phrase-label">📝 Frase/Texto (Opcional):</label>
-                <input type="text" class="phrase-input" id="phraseInput" placeholder="Ex: Empresa XYZ - 2024">
-            </div>
-
-            <div class="phrase-hint">
-                <strong>📎 Arquivos/Fotos?</strong><br>
-                Caso queira enviar logo, imagem ou arquivo para personalização, envie <strong>direto no WhatsApp</strong> após fazer seu orçamento!
-            </div>
-
-            <div class="modal-buttons">
-                <button class="btn-full btn-success" onclick="addToCart()">🛒 Adicionar</button>
-                <button class="btn-full btn-cancel" onclick="closeModal()">❌ Fechar</button>
+                
+                <div class="info-section">
+                    <div class="info-label">Medidas para Gravação</div>
+                    <div class="info-value" id="modalGravacao"></div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="info-label">Peso</div>
+                    <div class="info-value" id="modalPeso"></div>
+                </div>
+                
+                <div class="qty-group">
+                    <div class="info-label">Quantidade</div>
+                    <div class="qty-control">
+                        <button class="qty-btn" onclick="decreaseQty()">−</button>
+                        <input type="number" class="qty-input" id="qtyInput" value="1" min="1">
+                        <button class="qty-btn" onclick="increaseQty()">+</button>
+                    </div>
+                </div>
+                
+                <div class="phrase-group">
+                    <div class="info-label">Personalização (opcional)</div>
+                    <input type="text" class="phrase-input" id="phraseInput" placeholder="Ex: Empresa XYZ - 2024">
+                </div>
+                
+                <div class="phrase-hint">
+                    📎 Para enviar logo, imagem ou arquivo para personalização, envie direto no WhatsApp após fazer o orçamento!
+                </div>
+                
+                <div class="modal-buttons">
+                    <button class="btn-primary" onclick="addToCart()">✓ Adicionar</button>
+                    <button class="btn-secondary" onclick="closeModal()">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
-
+    
     <script>
-        const WHATSAPP_NUMBER = '5544991140169';
+        const WHATSAPP = '5544991140169';
         const SHEET_ID = '1qQXicJuTs-0JyoaylNk1wPfoaCBdtoNh7-vmvjmvPQI';
-        const ITEMS_PER_PAGE = 60;
+        const PER_PAGE = 12;
         
         let products = [];
         let cart = [];
-        let currentPage = 1;
-        let selectedProduct = null;
-        let quantity = 1;
-
+        let page = 1;
+        let selected = null;
+        let qty = 1;
+        
         async function loadProducts() {
             try {
-                const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-                const response = await fetch(csvUrl);
-                const csv = await response.text();
-                
+                const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+                const res = await fetch(url);
+                const csv = await res.text();
                 const lines = csv.trim().split('\n');
-                const headers = lines[0].split(',');
                 
                 products = lines.slice(1).map(line => {
-                    const values = line.split(',');
-                    return {
-                        id: values[0]?.trim() || '',
-                        codigo: values[0]?.trim() || '',
-                        nome: values[1]?.trim() || '',
-                        medidas: values[2]?.trim() || '',
-                        medidas_gravacao: values[3]?.trim() || '',
-                        peso: values[4]?.trim() || '',
-                        imagem: values[5]?.trim() || ''
-                    };
-                }).filter(p => p.codigo && p.nome);
+                    const [codigo, nome, medidas, gravacao, peso, imagem] = line.split(',').map(x => x.trim());
+                    return { codigo, nome, medidas, gravacao, peso, imagem };
+                }).filter(p => p.codigo);
                 
-                console.log(`Carregados ${products.length} produtos`);
-                renderHome();
-            } catch (error) {
-                console.error('Erro ao carregar produtos:', error);
-                document.getElementById('productsContainer').innerHTML = '<p class="loading">Erro ao carregar produtos. Verifique se a planilha está compartilhada.</p>';
+                console.log(`${products.length} produtos carregados`);
+                document.getElementById('statusText').textContent = `${products.length} produtos disponíveis`;
+                renderPage();
+            } catch (e) {
+                console.error('Erro:', e);
+                document.getElementById('statusText').textContent = 'Erro ao carregar produtos';
             }
         }
-
-        function renderHome() {
-            const start = (currentPage - 1) * ITEMS_PER_PAGE;
-            const end = start + ITEMS_PER_PAGE;
-            const pageProducts = products.slice(start, end);
-
-            const html = pageProducts.map(p => `
-                <div class="card" onclick="openProduct('${p.codigo}')">
-                    <div class="card-code">${p.codigo}</div>
+        
+        function renderPage() {
+            const start = (page - 1) * PER_PAGE;
+            const pageProds = products.slice(start, start + PER_PAGE);
+            
+            const html = pageProds.map(p => `
+                <div class="product-card" onclick="openProduct('${p.codigo}')">
+                    <div class="product-image">
+                        <img src="${p.imagem || 'https://via.placeholder.com/280x220?text=' + p.codigo}" alt="${p.nome}" onerror="this.style.display='none'">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-code">${p.codigo}</div>
+                        <div class="product-name">${p.nome}</div>
+                        <div class="product-specs">
+                            <div class="spec-line"><span class="spec-label">Medidas:</span> ${p.medidas}</div>
+                            <div class="spec-line"><span class="spec-label">Peso:</span> ${p.peso}</div>
+                        </div>
+                        <button class="add-btn">Adicionar ao Carrinho →</button>
+                    </div>
                 </div>
             `).join('');
             
-            document.getElementById('productsContainer').innerHTML = html || '<p class="loading">Nenhum produto encontrado</p>';
+            document.getElementById('productsGrid').innerHTML = html;
             
-            const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
-            const paginationHtml = Array.from({length: totalPages}, (_, i) => `
-                <button class="page-btn ${i+1 === currentPage ? 'active' : ''}" onclick="goToPage(${i+1})">${i+1}</button>
+            const pages = Math.ceil(products.length / PER_PAGE);
+            const pag = Array.from({length: pages}, (_, i) => `
+                <button class="page-btn ${i+1 === page ? 'active' : ''}" onclick="goPage(${i+1})">${i+1}</button>
             `).join('');
-            document.getElementById('paginationContainer').innerHTML = paginationHtml;
+            document.getElementById('paginationContainer').innerHTML = pag;
         }
-
+        
         function openProduct(codigo) {
-            selectedProduct = products.find(p => p.codigo === codigo);
-            if (!selectedProduct) return;
+            selected = products.find(p => p.codigo === codigo);
+            if (!selected) return;
             
-            quantity = 1;
+            qty = 1;
             document.getElementById('qtyInput').value = 1;
             document.getElementById('phraseInput').value = '';
             
-            document.getElementById('modalCode').textContent = selectedProduct.codigo;
-            document.getElementById('modalTitle').textContent = selectedProduct.nome;
-            document.getElementById('modalMedidas').textContent = selectedProduct.medidas;
-            document.getElementById('modalMedidasGravacao').textContent = selectedProduct.medidas_gravacao;
-            document.getElementById('modalPeso').textContent = selectedProduct.peso;
+            document.getElementById('modalCode').textContent = selected.codigo;
+            document.getElementById('modalName').textContent = selected.nome;
+            document.getElementById('modalMedidas').textContent = selected.medidas + ' cm';
+            document.getElementById('modalGravacao').textContent = selected.gravacao + ' cm';
+            document.getElementById('modalPeso').textContent = selected.peso + ' g';
             
-            const modalImage = document.getElementById('modalImage');
-            if (selectedProduct.imagem) {
-                modalImage.innerHTML = `<img src="${selectedProduct.imagem}" alt="${selectedProduct.nome}" onerror="this.style.display='none'">`;
+            const img = document.getElementById('modalImage');
+            if (selected.imagem) {
+                img.innerHTML = `<img src="${selected.imagem}" alt="${selected.nome}" onerror="this.style.display='none'">`;
             } else {
-                modalImage.innerHTML = '';
+                img.innerHTML = `<img src="https://via.placeholder.com/700x300?text=${selected.codigo}" alt="${selected.nome}">`;
             }
             
             document.getElementById('productModal').classList.add('show');
         }
-
-        function decreaseQty() {
-            if (quantity > 1) quantity--;
-            document.getElementById('qtyInput').value = quantity;
-        }
-
-        function increaseQty() {
-            quantity++;
-            document.getElementById('qtyInput').value = quantity;
-        }
-
-        function addToCart() {
-            if (!selectedProduct || quantity < 1) return;
-            
-            const phrase = document.getElementById('phraseInput').value || '';
-            
-            cart.push({
-                ...selectedProduct,
-                cartQuantity: quantity,
-                phrase,
-                cartId: Date.now()
-            });
-            
-            updateCartBadge();
-            closeModal();
-            showHome();
-        }
-
-        function updateCartBadge() {
-            const btn = document.getElementById('cartBtn');
-            if (cart.length > 0) {
-                btn.style.display = 'inline-flex';
-                document.getElementById('cartCount').textContent = cart.length;
-            } else {
-                btn.style.display = 'none';
-            }
-        }
-
-        function showHome() {
-            document.getElementById('homePage').style.display = 'block';
-            renderHome();
-        }
-
-        function showCart() {
-            if (cart.length === 0) {
-                alert('Carrinho vazio');
-                return;
-            }
-            openWhatsappModal();
-        }
-
-        function openWhatsappModal() {
-            let msg = `*📋 PEDIDO DE ORÇAMENTO*\n\n*DETALHES DO PEDIDO:*\n\n`;
-            
-            cart.forEach((item, i) => {
-                msg += `*${i+1}. [${item.codigo}] ${item.nome}*\n`;
-                msg += `   📏 Medidas: ${item.medidas}\n`;
-                msg += `   📦 Quantidade: ${item.cartQuantity}x\n`;
-                if(item.phrase) msg += `   📝 Frase: "${item.phrase}"\n`;
-                msg += `\n`;
-            });
-            
-            msg += `*TOTAL: ${cart.length} item(ns)*\n\n---\nEnviado via Catálogo Online`;
-            
-            const encoded = encodeURIComponent(msg);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
-            cart = [];
-            updateCartBadge();
-        }
-
+        
         function closeModal() {
             document.getElementById('productModal').classList.remove('show');
         }
-
-        function goToPage(page) {
-            currentPage = page;
-            renderHome();
-            window.scrollTo(0, 0);
+        
+        function decreaseQty() { if (qty > 1) qty--; document.getElementById('qtyInput').value = qty; }
+        function increaseQty() { qty++; document.getElementById('qtyInput').value = qty; }
+        
+        function addToCart() {
+            const phrase = document.getElementById('phraseInput').value;
+            cart.push({...selected, qty, phrase, id: Date.now()});
+            document.getElementById('cartCount').textContent = cart.length;
+            document.getElementById('cartBtn').classList.add('show');
+            closeModal();
         }
-
+        
+        function openWhatsapp() {
+            if (cart.length === 0) return;
+            let msg = `*📋 PEDIDO DE ORÇAMENTO*\n\n`;
+            cart.forEach((item, i) => {
+                msg += `*${i+1}. [${item.codigo}] ${item.nome}*\n`;
+                msg += `   📏 Medidas: ${item.medidas}\n`;
+                msg += `   📦 Qtd: ${item.qty}x\n`;
+                if(item.phrase) msg += `   📝 Frase: "${item.phrase}"\n`;
+                msg += `\n`;
+            });
+            msg += `*TOTAL: ${cart.length} itens*`;
+            window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+        
+        function goPage(p) { page = p; renderPage(); scrollTo(0,0); }
+        
         loadProducts();
     </script>
 </body>

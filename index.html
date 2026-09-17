@@ -771,7 +771,7 @@
             </div>
         </div>
 
-        <!-- UPLOAD PERSONALIZAÇÃO -->
+        <!-- PERSONALIZAÇÃO -->
         <div class="upload-section">
             <div class="upload-title">🎨 Personalização (Opcional)</div>
             
@@ -781,14 +781,11 @@
                 <input type="text" id="phraseInput" placeholder="Ex: Empresa XYZ - 2024" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px;">
             </div>
 
-            <!-- UPLOAD DE IMAGEM -->
-            <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; color: var(--dark);">🖼️ Imagem/Logo:</label>
-            <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                <div class="upload-icon">📎</div>
-                <div class="upload-text">Clique ou arraste para anexar imagem/logo</div>
-                <input type="file" class="file-input" id="fileInput" onchange="handleFileSelect(event)">
+            <!-- MENSAGEM SOBRE ANEXOS -->
+            <div style="background: #e8f5e9; border-left: 4px solid #25D366; padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6; color: #2e7d32;">
+                <strong>📎 Arquivos/Fotos?</strong><br>
+                Caso queira enviar logo, imagem ou qualquer outro arquivo para personalização, envie <strong>direto no WhatsApp</strong> após fazer seu orçamento!
             </div>
-            <div id="filePreview"></div>
         </div>
 
         <div class="modal-buttons">
@@ -815,20 +812,13 @@
         <h3>📩 Resumo do Pedido</h3>
         <div id="previewContent" style="margin: 24px 0; padding: 24px; background: var(--light); border-radius: 8px; font-size: 14px; line-height: 1.8;"></div>
         
-        <!-- INSTRUÇÕES -->
+        <!-- INSTRUÇÃO -->
         <div style="background: rgba(37, 211, 102, 0.1); border-left: 4px solid #25D366; padding: 16px; border-radius: 6px; margin-bottom: 24px; font-size: 13px; line-height: 1.8;">
-            <strong style="color: #25D366; display: block; margin-bottom: 12px;">📝 Como enviar:</strong>
-            <ol style="margin-left: 20px;">
-                <li style="margin-bottom: 8px;"><strong>1.</strong> Clique em <strong>"📥 Baixar Imagem"</strong> (se houver)</li>
-                <li style="margin-bottom: 8px;"><strong>2.</strong> Clique em <strong>"📋 Copiar Resumo"</strong></li>
-                <li style="margin-bottom: 8px;"><strong>3.</strong> Clique em <strong>"💬 Abrir WhatsApp"</strong></li>
-                <li style="margin-bottom: 8px;"><strong>4.</strong> Cole a mensagem (Ctrl+V)</li>
-                <li><strong>5.</strong> Clique em <strong>Anexar (📎)</strong> e selecione a imagem baixada</li>
-            </ol>
+            <strong style="color: #25D366; display: block; margin-bottom: 8px;">✅ Próximo passo:</strong>
+            <p>Clique no botão abaixo para enviar o orçamento pelo WhatsApp. Se tiver arquivos ou fotos para personalização, envie direto na conversa!</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;" id="actionButtons"></div>
-        <button class="btn-full btn-success" style="font-size: 16px; padding: 16px;" onclick="openWhatsappDirectAndCopy()">💬 Abrir WhatsApp</button>
+        <button class="btn-full btn-success" style="font-size: 16px; padding: 16px;" onclick="openWhatsappDirect()">💬 Enviar Orçamento para WhatsApp</button>
     </div>
 </div>
 
@@ -1129,65 +1119,7 @@ document.addEventListener('change', (e) => {
     if(e.target.id === 'qtyInput') quantity = parseInt(e.target.value) || 1;
 });
 
-function handleDragOver(e) {
-    e.preventDefault();
-    document.getElementById('uploadArea').classList.add('dragover');
-}
 
-function handleDragLeave(e) {
-    document.getElementById('uploadArea').classList.remove('dragover');
-}
-
-function handleDrop(e) {
-    e.preventDefault();
-    document.getElementById('uploadArea').classList.remove('dragover');
-    const file = e.dataTransfer.files[0];
-    if(file) processFile(file);
-}
-
-function handleFileSelect(e) {
-    const file = e.target.files[0];
-    if(file) processFile(file);
-}
-
-document.getElementById('uploadArea').onclick = () => document.getElementById('fileInput').click();
-
-function processFile(file) {
-    selectedPersonalization = {
-        name: file.name,
-        file: file,
-        isImage: file.type.startsWith('image/'),
-        phrase: ''
-    };
-    
-    if(selectedPersonalization.isImage) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            selectedPersonalization.preview = e.target.result;
-            document.getElementById('filePreview').innerHTML = `
-                <div class="file-preview">
-                    <img src="${e.target.result}" alt="preview">
-                    <div class="file-name">✓ ${file.name}</div>
-                    <button class="btn-cancel" style="margin-top:12px; width:100%;" onclick="clearFile()">❌ Remover</button>
-                </div>
-            `;
-        };
-        reader.readAsDataURL(file);
-    } else {
-        document.getElementById('filePreview').innerHTML = `
-            <div class="file-preview">
-                <div class="file-name">✓ ${file.name}</div>
-                <button class="btn-cancel" style="margin-top:12px; width:100%;" onclick="clearFile()">❌ Remover</button>
-            </div>
-        `;
-    }
-}
-
-function clearFile() {
-    selectedPersonalization = null;
-    document.getElementById('filePreview').innerHTML = '';
-    document.getElementById('fileInput').value = '';
-}
 
 function addToCart() {
     if(!selectedProduct || !selectedSize || quantity < 1) return;
@@ -1265,25 +1197,6 @@ function showHome() {
     renderHome();
 }
 
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #25D366;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 8px;
-        z-index: 9999;
-        font-weight: 600;
-        animation: slideIn 0.3s ease;
-    `;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2000);
-}
-
 function openWhatsappModal() {
     // Guardar a frase antes de abrir o modal
     cart.forEach(item => {
@@ -1299,23 +1212,10 @@ function openWhatsappModal() {
             <div>📏 Tamanho: <strong>${item.selectedSize}</strong></div>
             <div>📦 Quantidade: <strong>${item.cartQuantity}x</strong></div>
             ${item.personalization?.phrase ? `<div>📝 Frase: <strong>"${item.personalization.phrase}"</strong></div>` : ''}
-            ${item.personalization?.isImage ? `<div>🖼️ Com Imagem: <strong>${item.personalization.name}</strong></div>` : ''}
         </div>
     `).join('');
     
     document.getElementById('previewContent').innerHTML = previewHTML;
-    
-    // Gerar botões de ação
-    const hasImage = cart.some(item => item.personalization?.isImage);
-    let actionButtonsHTML = '';
-    
-    if(hasImage) {
-        actionButtonsHTML += `<button class="btn-full" style="background: #4CAF50; color: white; padding: 14px;" onclick="downloadImages()">📥 Baixar Imagem</button>`;
-    }
-    
-    actionButtonsHTML += `<button class="btn-full" style="background: #2196F3; color: white; padding: 14px;" onclick="copyResumo()">📋 Copiar Resumo</button>`;
-    
-    document.getElementById('actionButtons').innerHTML = actionButtonsHTML;
     document.getElementById('whatsappModal').classList.add('show');
 }
 
@@ -1335,9 +1235,6 @@ function generateMessage() {
         if(item.personalization?.phrase) {
             msg += `   📝 Frase: "${item.personalization.phrase}"\n`;
         }
-        if(item.personalization?.isImage) {
-            msg += `   🖼️ Arquivo: ${item.personalization.name}\n`;
-        }
         msg += `\n`;
     });
     
@@ -1346,36 +1243,11 @@ function generateMessage() {
     return msg;
 }
 
-function downloadImages() {
-    cart.forEach((item, index) => {
-        if(item.personalization?.isImage && item.personalization?.preview) {
-            const link = document.createElement('a');
-            link.href = item.personalization.preview;
-            link.download = `${item.name.replace(/\s+/g, '_')}_${item.selectedSize.replace(/\s+/g, '_')}.png`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    });
-    showToast('✓ Imagem(ns) baixada(s)!');
-}
-
-function copyResumo() {
+function openWhatsappDirect() {
     const msg = generateMessage();
-    navigator.clipboard.writeText(msg).then(() => {
-        showToast('✓ Resumo copiado!');
-    });
-}
-
-function openWhatsappDirectAndCopy() {
-    const msg = generateMessage();
-    navigator.clipboard.writeText(msg).then(() => {
-        setTimeout(() => {
-            const encodedMsg = encodeURIComponent(msg);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
-            closeWhatsappModal();
-        }, 300);
-    });
+    const encodedMsg = encodeURIComponent(msg);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
+    closeWhatsappModal();
 }
 
 function prevPage() { if(currentPage > 1) { currentPage--; renderHome(); } }

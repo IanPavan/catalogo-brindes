@@ -100,12 +100,28 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
         
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
+        }
+        
+        .product-image img.loading {
+            opacity: 0;
+        }
+        
+        .product-image img.loaded {
+            opacity: 1;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .product-info {
@@ -519,14 +535,29 @@
                 const lines = csv.trim().split('\n');
                 
                 products = lines.slice(1).map(line => {
-                    const parts = line.split(',');
+                    const parts = [];
+                    let current = '';
+                    let inQuotes = false;
+                    
+                    for (let char of line) {
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            parts.push(current);
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    parts.push(current);
+                    
                     return {
-                        codigo: parts[0]?.trim() || '',
-                        nome: parts[1]?.trim() || '',
-                        medidas: parts[2]?.trim() || '',
-                        gravacao: parts[3]?.trim() || '',
-                        peso: parts[4]?.trim() || '',
-                        imagem: parts[5]?.trim() || ''
+                        codigo: (parts[0] || '').trim(),
+                        nome: (parts[1] || '').trim(),
+                        medidas: (parts[2] || '').trim(),
+                        gravacao: (parts[3] || '').trim(),
+                        peso: (parts[4] || '').trim(),
+                        imagem: (parts[5] || '').trim()
                     };
                 }).filter(p => p.codigo);
                 
@@ -544,22 +575,25 @@
             const start = (page - 1) * PER_PAGE;
             const pageProds = products.slice(start, start + PER_PAGE);
             
-            const html = pageProds.map(p => `
-                <div class="product-card" onclick="openProduct('${p.codigo}')">
-                    <div class="product-image">
-                        <img src="${p.imagem}" alt="${p.nome}" onerror="this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-code">${p.codigo}</div>
-                        <div class="product-name">${p.nome}</div>
-                        <div class="product-specs">
-                            <div class="spec-line"><span class="spec-label">Medidas:</span> ${p.medidas}</div>
-                            <div class="spec-line"><span class="spec-label">Peso:</span> ${p.peso}</div>
+            const html = pageProds.map(p => {
+                const imgUrl = p.imagem || `https://picsum.photos/600/400?random=${Math.random()}`;
+                return `
+                    <div class="product-card" onclick="openProduct('${p.codigo.replace(/'/g, "\\'")}')">
+                        <div class="product-image">
+                            <img src="${imgUrl}" alt="${p.nome}" class="loading" onload="this.classList.remove('loading'); this.classList.add('loaded');" onerror="this.style.display='none'">
                         </div>
-                        <button class="add-btn">Adicionar ao Carrinho →</button>
+                        <div class="product-info">
+                            <div class="product-code">${p.codigo}</div>
+                            <div class="product-name">${p.nome}</div>
+                            <div class="product-specs">
+                                <div class="spec-line"><span class="spec-label">Medidas:</span> ${p.medidas}</div>
+                                <div class="spec-line"><span class="spec-label">Peso:</span> ${p.peso}</div>
+                            </div>
+                            <button class="add-btn">Adicionar ao Carrinho →</button>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
             
             document.getElementById('productsGrid').innerHTML = html || '<p>Nenhum produto encontrado</p>';
             renderPagination();
@@ -578,7 +612,6 @@
             
             document.getElementById('paginationContainer').innerHTML = pag.join('');
             
-            // Desabilitar botões de navegação
             document.getElementById('prevPageGroup').disabled = pageGroup === 0;
             document.getElementById('nextPageGroup').disabled = end >= totalPages;
         }
@@ -597,8 +630,9 @@
             document.getElementById('modalGravacao').textContent = selected.gravacao;
             document.getElementById('modalPeso').textContent = selected.peso;
             
+            const imgUrl = selected.imagem || `https://picsum.photos/600/400?random=${Math.random()}`;
             const img = document.getElementById('modalImage');
-            img.innerHTML = `<img src="${selected.imagem}" alt="${selected.nome}" onerror="this.parentElement.innerHTML='<div style=\\'color:white;font-size:36px;\\'>🎁</div>'">`;
+            img.innerHTML = `<img src="${imgUrl}" alt="${selected.nome}" onerror="this.style.display='none'">`;
             
             document.getElementById('productModal').classList.add('show');
         }

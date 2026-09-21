@@ -399,6 +399,23 @@
             transform: translateY(-2px);
         }
 
+        /* OVERLAY DO CARRINHO */
+        .carrinho-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 940;
+            cursor: pointer;
+        }
+
+        .carrinho-overlay.active {
+            display: block;
+        }
+
         /* PAINEL DO CARRINHO */
         .carrinho-painel {
             display: none;
@@ -667,6 +684,9 @@
         </div>
     </div>
 
+    <!-- OVERLAY DO CARRINHO -->
+    <div class="carrinho-overlay" id="carrinhoOverlay"></div>
+
     <!-- PAINEL DO CARRINHO -->
     <div class="carrinho-painel" id="carrinhoPanel">
         <div class="carrinho-painel-header">
@@ -762,10 +782,12 @@
 
         function abrirCarrinho() {
             document.getElementById('carrinhoPanel').classList.add('active');
+            document.getElementById('carrinhoOverlay').classList.add('active');
         }
 
         function fecharCarrinho() {
             document.getElementById('carrinhoPanel').classList.remove('active');
+            document.getElementById('carrinhoOverlay').classList.remove('active');
         }
 
         function enviarOrçamento() {
@@ -904,6 +926,14 @@
             produtoAtualModal = null;
         }
 
+        // Fechar ao clicar no overlay do carrinho
+        document.getElementById('carrinhoOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'carrinhoOverlay') {
+                fecharCarrinho();
+            }
+        });
+
+        // Fechar ao pressionar ESC
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 fecharModal();
@@ -911,6 +941,7 @@
             }
         });
 
+        // Fechar modal ao clicar no overlay do modal
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target.id === 'modal') fecharModal();
         });

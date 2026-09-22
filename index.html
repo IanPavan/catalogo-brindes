@@ -591,7 +591,31 @@
         }
 
         /* RESPONSIVO */
-        /* CELULAR - FORÇA 2 COLUNAS */
+        /* TABLET (até 768px) */
+        @media (max-width: 768px) {
+            .carrinho-painel {
+                max-width: 100%;
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 15px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* CELULAR - FORÇA 2 COLUNAS (vem DEPOIS de 768px, então tem precedência) */
         @media (max-width: 600px) {
             body {
                 padding: 60px 12px 20px;
@@ -629,27 +653,37 @@
             }
 
             .grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
                 margin-bottom: 30px;
             }
 
+            .card {
+                min-width: 0;
+            }
+
             .card-image {
-                height: 140px;
+                height: 130px;
             }
 
             .card-content {
-                padding: 10px;
+                padding: 8px;
             }
 
             .card-content h3 {
-                font-size: 0.85em;
-                margin-bottom: 6px;
+                font-size: 0.8em;
+                margin-bottom: 4px;
+                line-height: 1.2;
             }
 
             .card-content p {
-                font-size: 0.7em;
+                font-size: 0.65em;
                 margin: 2px 0;
+                line-height: 1.2;
+            }
+
+            .card-content .label {
+                font-size: 0.65em;
             }
 
             .pagination {
@@ -661,29 +695,6 @@
             .pagination span {
                 padding: 8px 12px;
                 font-size: 0.9em;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .carrinho-painel {
-                max-width: 100%;
-            }
-
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 15px;
-            }
-
-            header h1 {
-                font-size: 2em;
-            }
-
-            .modal-content {
-                padding: 20px;
-            }
-
-            .modal-buttons {
-                flex-direction: column;
             }
         }
 

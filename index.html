@@ -591,6 +591,79 @@
         }
 
         /* RESPONSIVO */
+        /* CELULAR - FORÇA 2 COLUNAS */
+        @media (max-width: 600px) {
+            body {
+                padding: 60px 12px 20px;
+            }
+
+            .carrinho-flutuante {
+                width: 50px;
+                height: 50px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .carrinho-icone {
+                font-size: 1.5em;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            header p {
+                font-size: 0.95em;
+            }
+
+            .search-box {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+
+            .search-box input,
+            .search-box button {
+                width: 100%;
+                padding: 12px 15px;
+                font-size: 0.95em;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                margin-bottom: 30px;
+            }
+
+            .card-image {
+                height: 140px;
+            }
+
+            .card-content {
+                padding: 10px;
+            }
+
+            .card-content h3 {
+                font-size: 0.85em;
+                margin-bottom: 6px;
+            }
+
+            .card-content p {
+                font-size: 0.7em;
+                margin: 2px 0;
+            }
+
+            .pagination {
+                gap: 5px;
+                margin: 20px 0;
+            }
+
+            .pagination button,
+            .pagination span {
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+        }
+
         @media (max-width: 768px) {
             .carrinho-painel {
                 max-width: 100%;

@@ -426,7 +426,7 @@
             max-width: 450px;
             height: 100vh;
             background: white;
-            z-index: 950;
+            z-index: 1000;
             box-shadow: -2px 0 10px rgba(0,0,0,0.2);
             overflow-y: auto;
             animation: slideInRight 0.3s;
@@ -709,7 +709,7 @@
 </head>
 <body>
     <!-- CARRINHO FLUTUANTE -->
-    <div class="carrinho-flutuante" onclick="abrirCarrinho()">
+    <div class="carrinho-flutuante" onclick="toggleCarrinho()">
         <span class="carrinho-icone">🛒</span>
         <div class="carrinho-contador" id="carrinhoContador">0</div>
     </div>
@@ -862,6 +862,15 @@
         function removerCarrinho(idx) {
             carrinho.splice(idx, 1);
             atualizarCarrinho();
+        }
+
+        function toggleCarrinho() {
+            const painel = document.getElementById('carrinhoPanel');
+            if (painel.classList.contains('active')) {
+                fecharCarrinho();
+            } else {
+                abrirCarrinho();
+            }
         }
 
         function abrirCarrinho() {
